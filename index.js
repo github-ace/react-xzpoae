@@ -7,7 +7,6 @@ import Icon from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 
-@Form.create()
 class HorizontalLoginForm extends React.Component {
   render() {
     const {getFieldDecorator} =this.props.form
