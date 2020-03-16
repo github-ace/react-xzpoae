@@ -7,34 +7,13 @@ import Icon from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
-
+@Form.create()
 class HorizontalLoginForm extends React.Component {
-  componentDidMount() {
-    // To disable submit button at the beginning.
-    this.props.form.validateFields();
-  }
-
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
-  };
-
   render() {
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-
-    // Only show error after a field is touched.
-    const usernameError = isFieldTouched('username') && getFieldError('username');
-    const passwordError = isFieldTouched('password') && getFieldError('password');
+    const {getFieldDecorator} =this.props.form
     return (
       <Form layout="inline" onSubmit={this.handleSubmit}>
-        <Form.Item validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
+        <Form.Item>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
           })(
@@ -44,7 +23,7 @@ class HorizontalLoginForm extends React.Component {
             />,
           )}
         </Form.Item>
-        <Form.Item validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
+        <Form.Item>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'Please input your Password!' }],
           })(
@@ -56,7 +35,7 @@ class HorizontalLoginForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
+          <Button type="primary" htmlType="submit">
             Log in
           </Button>
         </Form.Item>
@@ -68,5 +47,3 @@ class HorizontalLoginForm extends React.Component {
 const WrappedHorizontalLoginForm = Form.create({ name: 'horizontal_login' })(HorizontalLoginForm);
 
 ReactDOM.render(<WrappedHorizontalLoginForm />, document.getElementById('container'));
-
-// ReactDOM.render(<Demo />, document.getElementById('container'));
